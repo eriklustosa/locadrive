@@ -1,3 +1,4 @@
+#comentario para teste
 import mysql.connector as mysql
 
 conexao = mysql.connect(host='localhost', database='cadastracnh', user='root', passwd='123456')
