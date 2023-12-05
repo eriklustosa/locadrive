@@ -216,6 +216,47 @@ class ServidorCadastro(threading.Thread):
                             self.csocket.close()
                        else:
                             print("Erro, não foi encontrado")
+                    
+                    elif operacao == "cadastracnh":
+                        data = self.csocket.recv(1024).decode()
+                        operacao, *dados = data.split(';')
+                        dados = ';'.join(dados) 
+                        print('Operação:', operacao)
+                        print('Dados:', dados)
+                        nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci = dados.split(';')
+                        
+                        if self.cadastracnh(nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci):
+                            
+                            print(f'{nome} tem uma conta no sistema!')
+                       
+                        else:
+                            print("Erro na criação da cnh")
+                            self.csocket.close()
+                            return
+                        
+                    elif operacao == "buscacnh":
+                        data = self.csocket.recv(1024).decode()
+                        operacao, *dados = data.split(';')
+                        dados = ';'.join(dados) 
+                        print('Operação:', operacao)
+                        print('Dados:', dados)
+
+                        cpf = dados.split(';')[0]
+                        print(cpf)
+                        resultado = self.busca(cpf)
+                        print("abaixo disso tem o resultado:")
+                        print(resultado)
+                        if resultado != None:
+                            nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci = resultado
+                            resposta = f'{nome};{data_nascimento}; {cpf}; {rg};{tipo_carteira};{data_emissao_CNH};{estado};{cidade}; {data_venci}'
+                            print(resposta)
+                            self.csocket.send(resposta.encode())
+                            self.csocket.close()
+                        else:
+                            print("Erro, não foi encontrado")
+
+              
+
                     else:
                         print('Erro') 
                 else:
@@ -274,6 +315,47 @@ class ServidorCadastro(threading.Thread):
         if resultado:
             nome, cpf_encontrado, email, estado, telefone, cep, cidade, data_nascimento = resultado
             return nome, cpf_encontrado, email, estado, telefone, cep, cidade, data_nascimento
+        else:
+            return None
+
+    def cadastracnh(self, nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci):
+        existe = self.buscacnh(cpf)
+        if existe == True:
+            insert_sql = """
+            INSERT INTO cadastracnh (nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_sql, (nome, data_nascimento, cpf, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci))
+            conexao.commit()
+            return True
+        else:
+            return False
+    
+    def buscacnh(self, cpf):
+        #Verifica se o RG já existe
+        select_sql = "SELECT * FROM cadastracnh WHERE cpf = %s"
+        cursor.execute(select_sql, (cpf,))
+        result = cursor.fetchone()
+        
+        #Se o CPF já existir, retorna False
+        if result:
+            return False
+        else:
+            return True
+    
+
+    
+    def buscacnhmostra(self, cpf):
+        #Verifica se o RG já existe
+        select_sql = "SELECT * FROM cadastracnh WHERE cpf = %s"
+        cursor.execute(select_sql, (cpf,))
+        result = cursor.fetchone()
+        
+        #Se o CPF já existir, retorna False
+        if result:
+            nome, data_nascimento, cpf_encotrado, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci = result
+
+            return nome, data_nascimento, cpf_encotrado, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci
         else:
             return None
             

@@ -127,7 +127,7 @@ class Main(QMainWindow, Ui_Main):
 
         # BOTOES DA TELA DE LOGIN EFETUADO
         self.tela_loginefetuado.botao_sair.clicked.connect(self.SairSistema)
-        # self.tela_loginefetuado.pushButton_2.clicked.connect(self.AbrirTelaCNH)
+        self.tela_loginefetuado.pushButton_2.clicked.connect(self.AbrirTelaCNH)
         self.tela_loginefetuado.pushButton_3.clicked.connect(
             self.abrirTelaCarrosDispo)
         self.tela_loginefetuado.pushButton_4.clicked.connect(
@@ -157,7 +157,7 @@ class Main(QMainWindow, Ui_Main):
             self.abrirTelaloginEfetuado)
 
         # BOTOES DA TELA MINHA CNH
-        # self.tela_CNH.pushButton_2.clicked.connect(self.botaoCadastraCNH)
+        self.tela_CNH.pushButton_2.clicked.connect(self.botaoCadastraCNH)
         self.tela_CNH.pushButton.clicked.connect(self.abrirTelaloginEfetuado)
 
         # BOTOES DA TELA DE CARROS DISPONIVEIS
@@ -312,7 +312,7 @@ class Main(QMainWindow, Ui_Main):
     def AbrirTelaMinhasReservas(self):
         self.QtStack.setCurrentIndex(6)
 
-    '''def AbrirTelaCNH(self):
+    def AbrirTelaCNH(self):
     
         sabe, cpf_pessoa, data_nascimento, nome_pessoa = self.cad.busca_dados(self.cpf)
         if sabe == True:
@@ -343,7 +343,7 @@ class Main(QMainWindow, Ui_Main):
                 pass
 
                 
-        self.QtStack.setCurrentIndex(7)'''
+        self.QtStack.setCurrentIndex(7)
 
     def abrirTelaCarrosDispo(self):
         self.QtStack.setCurrentIndex(8)
@@ -449,7 +449,7 @@ class Main(QMainWindow, Ui_Main):
         else:
             self.abrirTelaCadastro()'''
 
-    '''def botaoCadastraCNH(self):
+    def botaoCadastraCNH(self):
         preencheu = 0
         nome = self.tela_CNH.lineEdit_2.text()
         data_nasci = self.tela_CNH.lineEdit.text()
@@ -463,9 +463,14 @@ class Main(QMainWindow, Ui_Main):
         tipo_carteira = self.tela_CNH.comboBox.currentText()
 
         if(nome != '' and data_nasci != '' and cpf != '' and data_venci != '' and rg != '' and tipo_carteira != '' and estado != '' and cidade != '' and data_emissao_CNH !=''):
-                c = CNH(nome, data_nasci, data_emissao_CNH, estado, cpf, rg, data_venci, cidade, tipo_carteira)
+            try:
+                msg = f'cadastracnh;{nome};{data_nasci};{cpf};{rg};{tipo_carteira};{data_emissao_CNH};{estado};{cidade};{data_venci}'
+                self.client_socket.send(msg.encode())
+                resp = self.client_socket.recv(1024).decode()
+                print(resp)
+
+                if resp.lower() == 'conta criada com sucesso!':
                 
-                if self.cad_cnh.cadastracnh(c):
                     QMessageBox.information(None, 'LocaDrive', 'Cadastro realizado com sucesso!')
                     self.tela_CNH.lineEdit_2.setReadOnly(True)
                     self.tela_CNH.lineEdit.setReadOnly(True)
@@ -479,8 +484,10 @@ class Main(QMainWindow, Ui_Main):
                     preencheu = 1
     
                 else:
+                    
                     QMessageBox.warning(None, 'LocaDrive', 'O CPF informado já está cadastrado na base de dados!')
-                               
+            except Exception as e:
+                print(f"erro: {e}")           
         else:
             QMessageBox.warning(None, 'LocaDrive', 'Todos os valores devem ser preenchidos!')
             
@@ -488,7 +495,7 @@ class Main(QMainWindow, Ui_Main):
         if preencheu == 1:
             self.abrirTelaloginEfetuado()
         else:
-            self.AbrirTelaCNH()'''
+            self.AbrirTelaCNH()
 
     def fecharPrograma(self):
         sys.exit()
