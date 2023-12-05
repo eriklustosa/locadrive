@@ -25,7 +25,7 @@ from carros_telaSUV import Carros_A
 from telasobrenos import Sobre_Nos
 import json
 
-
+#teste cris
 class Ui_Main(QtWidgets.QWidget):
     def setupUi(self, Main):
         Main.setObjectName('Main')
