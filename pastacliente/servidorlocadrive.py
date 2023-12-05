@@ -8,6 +8,7 @@ import mysql.connector as mysql
 conexao = mysql.connect(host='localhost', database='bdlocadrive', user='root', passwd='123456')
 cursor = conexao.cursor()
 
+
 sql1 = """
 CREATE TABLE IF NOT EXISTS cadastrapessoa(
     id INT AUTO_INCREMENT PRIMARY KEY,
