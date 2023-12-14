@@ -598,6 +598,8 @@ class Main(QMainWindow, Ui_Main):
             self.abrirTelaCadastro()'''
 
     def botaoCadastraCNH(self):
+        
+        '''Esta funcao cadastra a CNH do usuario no sistema.'''
         preencheu = 0
         nome = self.tela_CNH.lineEdit_2.text()
         data_nasci = self.tela_CNH.lineEdit.text()
