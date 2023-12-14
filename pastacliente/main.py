@@ -27,6 +27,9 @@ from telasobrenos import Sobre_Nos
 
 
 class Ui_Main(QtWidgets.QWidget):
+    '''
+        Essa classe é a criação das telas.
+    '''
     def setupUi(self, Main):
         Main.setObjectName('Main')
         Main.resize(700, 480)
@@ -163,6 +166,10 @@ class Main(QMainWindow, Ui_Main):
         Abre a tela da categoria C.
     '''
     def __init__(self):
+        '''
+        Esse método é o costrutor onde é criado as instâcias e configura a interface do usuário
+        Também é criado as conexões dos botões com os métodos.
+        '''
         super(Main, self).__init__(None)
         self.setupUi(self)
 
