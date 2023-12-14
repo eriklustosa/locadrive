@@ -23,7 +23,7 @@ from carros_telaPICAPE import Carros_B
 from carros_telaSEDAN import Carros_C
 from carros_telaSUV import Carros_A
 from telasobrenos import Sobre_Nos
-import json
+
 
 
 class Ui_Main(QtWidgets.QWidget):
@@ -102,6 +102,66 @@ class Ui_Main(QtWidgets.QWidget):
 
 
 class Main(QMainWindow, Ui_Main):
+
+    '''
+    A classe Main herda de QMainWindow e Ui_Main. Ela é a classe principal que controla a interface do usuário e a lógica do programa.
+
+    Atributtes:
+    -----------
+    cad_carros : object
+        Uma instância da classe Cadastra_Carro.
+    ip : str
+        O endereço IP do servidor.
+    port : int
+        A porta do servidor.
+    addr : tuple
+        Uma tupla contendo o endereço IP e a porta do servidor.
+    client_socket : socket
+        O socket do cliente que se conecta ao servidor.
+    cpf : str
+        O CPF do usuário.
+
+    Methods:
+    --------
+    __init__():
+        Inicializa a classe Main e configura a interface do usuário.
+    abrirTelaCadastro():
+        Abre a tela de cadastro.
+    verificarLogin():
+        Verifica as credenciais de login do usuário.
+    fecharPrograma():
+        Fecha o programa.
+    botaoCadastra():
+        Cadastra um novo usuário.
+    abrirTelalogin():
+        Abre a tela de login.
+    SairSistema():
+        Sai do sistema.
+    AbrirTelaCNH():
+        Abre a tela CNH.
+    abrirTelaCarrosDispo():
+        Abre a tela de carros disponíveis.
+    abrirTelaDadosPessoais():
+        Abre a tela de dados pessoais.
+    AbrirTelaMinhasReservas():
+        Abre a tela de minhas reservas.
+    abrirTelaAlugarCarro():
+        Abre a tela de alugar carro.
+    AbrirTelaSobrenos():
+        Abre a tela sobre nós.
+    abrirTelaAlterarDP():
+        Abre a tela de alterar dados pessoais.
+    abrirTelaloginEfetuado():
+        Abre a tela de login efetuado.
+    botaoCadastraCNH():
+        Cadastra a CNH do usuário.
+    AbrirTelaCategoriaA():
+        Abre a tela da categoria A.
+    AbrirTelaCategoriaB():
+        Abre a tela da categoria B.
+    AbrirTelaCategoriaC():
+        Abre a tela da categoria C.
+    '''
     def __init__(self):
         super(Main, self).__init__(None)
         self.setupUi(self)
@@ -190,6 +250,16 @@ class Main(QMainWindow, Ui_Main):
 
     
     def SairSistema(self):
+        '''
+        Este método é usado para sair do sistema.
+
+        O método primeiro imprime '1 sair sistema' para indicar o início do processo de saída. Em seguida, ele cria uma mensagem 'sair;' e a envia para o servidor através do socket do cliente. Depois disso, imprime '2 sair sistema' para indicar que a mensagem foi enviada com sucesso.
+
+        Em seguida, o método redefine o endereço e o socket do cliente e se conecta ao servidor novamente. Isso é feito para garantir que o cliente possa se reconectar ao servidor após sair do sistema.
+
+        Finalmente, o método chama o método 'abrirTelalogin()' para abrir a tela de login. Isso permite que o usuário faça login novamente após sair do sistema.
+       '''
+    
         print('1 sair sistema')
         msg = f'sair;'
         self.client_socket.send(msg.encode())
@@ -203,6 +273,26 @@ class Main(QMainWindow, Ui_Main):
         self.abrirTelalogin()
       
     def botaoCadastra(self):
+        '''
+        Este método é usado para cadastrar um novo usuário no sistema.
+
+        Primeiro, ele recupera as informações inseridas pelo usuário nos campos de 
+        entrada da tela de cadastro. Em seguida, verifica se todos os campos foram preenchidos.
+
+        Se todos os campos foram preenchidos, ele tenta enviar uma mensagem 
+        de cadastro para o servidor através do socket do cliente. A mensagem de 
+        cadastro contém todas as informações do usuário.
+
+        Depois que a mensagem é enviada, o método recebe uma resposta do servidor. 
+        Se a resposta for 'conta criada com sucesso!', ele limpa todos os campos de 
+        entrada e reconecta o cliente ao servidor. Em seguida, ele abre a tela de login.
+
+        Se a resposta do servidor não for 'conta criada com sucesso!', 
+        ele exibe uma mensagem de erro ao usuário.
+
+        Se nem todos os campos foram preenchidos, ele exibe uma mensagem de aviso ao 
+        usuário e abre a tela de cadastro novamente.
+       '''
 
         nome = self.tela_cadastro.lineEdit.text()
         datanasci = self.tela_cadastro.dateEdit.text()
@@ -256,9 +346,23 @@ class Main(QMainWindow, Ui_Main):
             self.abrirTelaCadastro()
 
     def abrirTelaCadastro(self):
+        '''
+        Este método é usado para abrir a tela de cadastro.
+
+        '''
         self.QtStack.setCurrentIndex(1)
 
     def abrirTelalogin(self):
+        '''
+        Este método é usado para abrir a tela de login.
+
+        Primeiro, ele limpa os campos de entrada na tela inicial e redefine o 
+        atributo cpf para uma string vazia. Isso é feito para garantir que não 
+        haja informações residuais dos usos anteriores da tela de login.
+
+        Em seguida, ele muda o índice do QStackedWidget para 0, que é o 
+        índice da tela de login.  
+        '''
         self.tela_inicial.lineEdit.setText('')
         self.tela_inicial.lineEdit_2.setText('')
         
@@ -267,17 +371,36 @@ class Main(QMainWindow, Ui_Main):
         
 
     def abrirTelaloginEfetuado(self):
+        '''
+        Este método é usado para abrir a tela de login efetuado.
+        '''
         self.QtStack.setCurrentIndex(2)
 
     def abrirTelaDadosPessoais(self):
+        '''
+        Este método é usado para abrir a tela de dados pessoais.
+
+        Primeiro, ele tenta enviar uma mensagem de busca para o servidor através do socket do cliente. 
+        A mensagem de busca contém o CPF do usuário.
+
+        Depois que a mensagem é enviada, o método recebe uma resposta do servidor. 
+        Se a resposta contiver um ';', ele assume que a resposta é uma string contendo os 
+        dados do usuário separados por ';'. Ele então divide a resposta em várias partes e 
+        usa essas partes para preencher os campos de entrada na tela de dados pessoais.
+
+        Se a resposta do servidor não contiver um ';', ele imprime uma mensagem de erro.
+
+        Se ocorrer uma exceção durante esse processo, ele imprime a exceção.
+
+    '''
         try:
-            print('1')
+            
             mensagem = f'busca;{self.cpf}'
-            print('2')
+            
             self.client_socket.send(mensagem.encode())
-            print('3')
+        
             resposta = self.client_socket.recv(1024).decode()
-            print('4')
+            
             if ';' in resposta:
                 nome, cpf_encotrado, email, estado, telefone, cep, cidade, data_nascimento = resposta.split(
                     ';')
