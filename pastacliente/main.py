@@ -103,7 +103,8 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack11)
         self.QtStack.addWidget(self.stack12)
 
-
+'''
+testandoooooo'''
 class Main(QMainWindow, Ui_Main):
 
     '''
