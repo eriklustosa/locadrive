@@ -468,19 +468,36 @@ class Main(QMainWindow, Ui_Main):
                 
         self.QtStack.setCurrentIndex(7)
 
+
+
     def abrirTelaCarrosDispo(self):
+        '''
+        Este método é usado para abrir a tela de carros disponíveis.
+        '''
         self.QtStack.setCurrentIndex(8)
 
     def AbrirTelaCategoriaA(self):
+        '''
+        Este método é usado para abrir a tela da categoria B.
+        '''
         self.QtStack.setCurrentIndex(9)
 
     def AbrirTelaCategoriaB(self):
+        '''
+        Este método é usado para abrir a tela da categoria B.
+        '''
         self.QtStack.setCurrentIndex(10)
 
     def AbrirTelaCategoriaC(self):
+        '''
+        Este método é usado para abrir a tela da categoria C.
+        '''
         self.QtStack.setCurrentIndex(11)
 
     def AbrirTelaSobrenos(self):
+        '''
+        Este método é usado para abrir a tela sobre nós.
+        '''
         self.QtStack.setCurrentIndex(12)
 
     def verificarLogin(self):
