@@ -259,6 +259,25 @@ class ServidorCadastro(threading.Thread):
             return None
         
     def busca_dados(self, cpf):
+        
+        """Este método busca um usuário no sistema pelo CPF.
+        
+        ...
+        
+        Atributes:
+        
+        cpf: str
+            CPF do usuário.
+            
+        Returns:
+        --------
+        cpf (str):
+            CPF do usuário.
+            data_nascimento (str):
+            Data de nascimento do usuário.
+            nome (str):
+            Nome do usuário.
+            """
         sql = "SELECT cpf, data_nascimento, nome FROM cadastrapessoa WHERE cpf = %s"
         cursor.execute(sql, (cpf,))
 
@@ -271,6 +290,42 @@ class ServidorCadastro(threading.Thread):
             return None
 
     def cadastracnh(self, cnh, nome, data_nascimento, cpf, rg, numcnh, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci):
+        
+        """Este método cadastra um novo usuário no sistema.
+        
+        ...
+        
+        Attributes:
+        
+            
+            nome (str):
+            Nome do usuário.
+            cpf (str):
+            CPF do usuário.
+            email (str):
+            Email do usuário.
+            estado (str):
+            Estado do usuário.
+            telefone (str):
+            Telefone do usuário.
+            cep (str):
+            CEP do usuário.
+            cidade (str):
+            Cidade do usuário.
+            data_nascimento (str):
+            Data de nascimento do usuário.
+            senha (str):
+            Senha do usuário.
+            
+            
+        Returns:
+        --------
+        
+        True: bool
+            Se o CPF não existir no sistema.
+        False: bool
+            Se o CPF já existir no sistema.
+        """
         existe = self.buscacnh(cnh)
         if existe == True:
             insert_sql = """
@@ -284,6 +339,24 @@ class ServidorCadastro(threading.Thread):
             return False
     
     def buscacnh(self, numero):
+        """Este método busca um usuário no sistema pelo CPF.
+        
+        ...
+        
+        Atributes:
+        
+        numero: str
+            CPF do usuário.
+        
+        Returns:
+        --------
+        
+        True: bool
+            Se o CPF não existir no sistema.
+        False: bool
+            Se o CPF já existir no sistema.
+            
+            """
         #Verifica se o RG já existe
         select_sql = "SELECT * FROM cadastracnh WHERE numcnh = %s"
         cursor.execute(select_sql, (numero,))
@@ -296,6 +369,35 @@ class ServidorCadastro(threading.Thread):
             return True
     
     def buscaDadosCNH(self, cpf):
+        
+        """Este método busca um usuário no sistema pelo CPF.
+        
+        ...
+        
+        Atributes:
+        
+        cpf: str
+            CPF do usuário.
+        
+        Returns:
+        --------
+        
+        rg (str):
+            RG do usuário.
+        numcnh (str):
+            Numero da CNH do usuário.
+        tipo_carteira (str):
+            Tipo da carteira do usuário.
+        data_emissao_CNH (str):
+            Data de emissão da CNH do usuário.
+        estado (str):
+            Estado do usuário.
+        cidade (str):
+            Cidade do usuário.
+        data_venci (str):
+            Data de vencimento da CNH do usuário.
+            
+        """
         sql = "SELECT rg, numcnh, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci FROM cadastracnh WHERE cpf = %s"
         cursor.execute(sql, (cpf,))
         
