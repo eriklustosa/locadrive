@@ -178,6 +178,27 @@ class ServidorCadastro(threading.Thread):
             self.csocket.close()
         
     def verificar_usuario_senha(self, cpf, senha):
+        """Este método verifica se o usuário e senha informados estão corretos.
+        
+        
+        ...
+        
+        Attributes:
+        -----------
+        
+        cpf: str
+            CPF do usuário.
+        senha: str
+            Senha do usuário.
+            
+        Returns:
+        --------
+        
+        True: bool
+            Se o CPF e senha estiverem corretos.
+        False: bool
+            Se o CPF e senha estiverem incorretos.
+        """
         # Criptografa a senha
         senha_criptografada = hashlib.sha256(senha.encode()).hexdigest()
 
@@ -196,6 +217,38 @@ class ServidorCadastro(threading.Thread):
     def cadastrar_novo_usuario(self, nome, cpf, email, estado, telefone, cep, cidade, data_nascimento, senha):
         """
         Este método cadastra um novo usuário no sistema.
+        
+        ...
+        
+        Attributes:
+        -----------
+        
+        nome (str):
+            Nome do usuário.
+        cpf (str):
+            CPF do usuário.
+        email (str):
+            Email do usuário.
+        estado (str):
+            Estado do usuário.
+        telefone (str):
+            Telefone do usuário.
+        cep (str):
+            CEP do usuário.
+        cidade (str):
+            Cidade do usuário.
+        data_nascimento (str):
+            Data de nascimento do usuário.
+        senha (str):
+            Senha do usuário.
+        
+        
+        Returns:
+        
+        True: bool
+            Se o CPF não existir no sistema.
+        False: bool
+            Se o CPF já existir no sistema.
         """
         try:
             # Criptografa a senha
@@ -298,23 +351,23 @@ class ServidorCadastro(threading.Thread):
         Attributes:
         
             
-            nome (str):
+        nome (str):
             Nome do usuário.
-            cpf (str):
+        cpf (str):
             CPF do usuário.
-            email (str):
+        email (str):
             Email do usuário.
-            estado (str):
+        estado (str):
             Estado do usuário.
-            telefone (str):
+        telefone (str):
             Telefone do usuário.
-            cep (str):
+        cep (str):
             CEP do usuário.
-            cidade (str):
+        cidade (str):
             Cidade do usuário.
-            data_nascimento (str):
+        data_nascimento (str):
             Data de nascimento do usuário.
-            senha (str):
+        senha (str):
             Senha do usuário.
             
             
