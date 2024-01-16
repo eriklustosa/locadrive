@@ -27,7 +27,7 @@ class OP_MeuAluguel(object):
         self.label_9.setGeometry(QtCore.QRect(250, 20, 281, 91))
         self.label_9.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_9.setText("")
-        self.label_9.setPixmap(QtGui.QPixmap("carro.png"))
+        self.label_9.setPixmap(QtGui.QPixmap("fotos/carro.png"))
         self.label_9.setScaledContents(True)
         self.label_9.setObjectName("label_9")
         self.widget_3 = QtWidgets.QWidget(self.widget)

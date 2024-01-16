@@ -26,7 +26,7 @@ class OP_MinhasReservas(object):
         self.label_3.setGeometry(QtCore.QRect(280, 0, 271, 71))
         self.label_3.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_3.setText("")
-        self.label_3.setPixmap(QtGui.QPixmap("carro.png"))
+        self.label_3.setPixmap(QtGui.QPixmap("fotos/carro.png"))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName("label_3")
         self.widget_4 = QtWidgets.QWidget(self.widget)

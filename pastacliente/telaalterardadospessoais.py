@@ -26,7 +26,7 @@ class AlterarDP(object):
         self.label.setGeometry(QtCore.QRect(280, 0, 271, 71))
         self.label.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("carro.png"))
+        self.label.setPixmap(QtGui.QPixmap("fotos/carro.png"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.widget_2 = QtWidgets.QWidget(self.widget)

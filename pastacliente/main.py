@@ -432,6 +432,7 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(3)
 
     def mostrar_mensagem_erro(self, mensagem):
+        
         QMessageBox.critical(self, "...", mensagem)
 
     def abrirTelaAlterarDP(self):
@@ -444,34 +445,47 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(6)
 
     def AbrirTelaCNH(self):
-    
-        sabe, cpf_pessoa, data_nascimento, nome_pessoa = self.cad.busca_dados(self.cpf)
-        if sabe == True:
-            self.tela_CNH.lineEdit_2.setText(nome_pessoa)
-            self.tela_CNH.lineEdit_3.setText(cpf_pessoa)
-            self.tela_CNH.lineEdit.setText(data_nascimento)
-            try:
-                sabe1, rg, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci = self.cad_cnh.buscaDadosCNH(cpf_pessoa)
-                if sabe1 == True:
-                    self.tela_CNH.lineEdit_6.setText(rg)
-                    self.tela_CNH.comboBox.setCurrentText(tipo_carteira)
-                    data_CNH = QDate.fromString(data_emissao_CNH, "yyyy-MM-dd")
-                    self.tela_CNH.dateEdit_2.setDate(data_CNH)
-                    self.tela_CNH.lineEdit_5.setText(estado)
-                    self.tela_CNH.lineEdit_7.setText(cidade)
-                    data_VENCI = QDate.fromString(data_venci, "yyyy-MM-dd")
-                    self.tela_CNH.dateEdit_3.setDate(data_VENCI)
+        mensagem = f'operacnh;{self.cpf}'
+            
+        self.client_socket.send(mensagem.encode())
 
-                    self.tela_CNH.lineEdit_2.setReadOnly(True)
-                    self.tela_CNH.lineEdit.setReadOnly(True)
-                    self.tela_CNH.dateEdit_2.setReadOnly(True)
-                    self.tela_CNH.lineEdit_5.setReadOnly(True)
-                    self.tela_CNH.lineEdit_3.setReadOnly(True)
-                    self.tela_CNH.lineEdit_6.setReadOnly(True)
-                    self.tela_CNH.dateEdit_3.setReadOnly(True)
-                    self.tela_CNH.lineEdit_7.setReadOnly(True)
-            except:
-                pass
+        resposta = self.client_socket.recv(1024).decode()
+        cpf, data_nascimento, nome = resposta.split(';')
+
+    
+        self.tela_CNH.lineEdit_2.setText(nome)
+        self.tela_CNH.lineEdit_3.setText(cpf)
+        self.tela_CNH.lineEdit.setText(data_nascimento)
+        try:
+            mensagem = f'existecnh;{self.cpf}'
+            self.client_socket.send(mensagem.encode())
+
+            resposta = self.client_socket.recv(1024).decode()
+            sabe, rg, numcnh, tipo_carteira, data_emissao_CNH, estado, cidade, data_venci = resposta.split(';')
+            
+            
+            if sabe == True:
+                self.tela_CNH.lineEdit_6.setText(rg)
+                self.tela_CNH.comboBox.setCurrentText(tipo_carteira)
+                data_CNH = QDate.fromString(data_emissao_CNH, "yyyy-MM-dd")
+                self.tela_CNH.dateEdit_2.setDate(data_CNH)
+                self.tela_CNH.lineEdit_5.setText(estado)
+                self.tela_CNH.lineEdit_7.setText(cidade)
+                data_VENCI = QDate.fromString(data_venci, "yyyy-MM-dd")
+                self.tela_CNH.dateEdit_3.setDate(data_VENCI)
+                self.tela_CNH.lineEdit_cnh.setText(numcnh)
+
+                self.tela_CNH.lineEdit_2.setReadOnly(True)
+                self.tela_CNH.lineEdit.setReadOnly(True)
+                self.tela_CNH.dateEdit_2.setReadOnly(True)
+                self.tela_CNH.lineEdit_5.setReadOnly(True)
+                self.tela_CNH.lineEdit_3.setReadOnly(True)
+                self.tela_CNH.lineEdit_6.setReadOnly(True)
+                self.tela_CNH.dateEdit_3.setReadOnly(True)
+                self.tela_CNH.lineEdit_7.setReadOnly(True)
+                self.tela_CNH.lineEdit_cnh.setReadOnly(True)
+        except:
+            pass
 
                 
         self.QtStack.setCurrentIndex(7)

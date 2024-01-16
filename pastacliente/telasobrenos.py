@@ -33,7 +33,7 @@ class Sobre_Nos(object):
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(0, 10, 101, 51))
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("images.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("fotos/images.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)

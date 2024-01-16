@@ -221,7 +221,7 @@ class Telacadastro(object):
         self.label_14 = QtWidgets.QLabel(Cadastramento)
         self.label_14.setGeometry(QtCore.QRect(140, 400, 501, 131))
         self.label_14.setText("")
-        self.label_14.setPixmap(QtGui.QPixmap("ImagemCarrosCadastro.png"))
+        self.label_14.setPixmap(QtGui.QPixmap("fotos/ImagemCarrosCadastro.png"))
         self.label_14.setScaledContents(True)
         self.label_14.setObjectName("label_14")
 

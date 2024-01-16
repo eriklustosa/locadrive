@@ -26,7 +26,7 @@ class OP_CNH(object):
         self.label_9.setGeometry(QtCore.QRect(300, 20, 281, 91))
         self.label_9.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_9.setText("")
-        self.label_9.setPixmap(QtGui.QPixmap("carro.png"))
+        self.label_9.setPixmap(QtGui.QPixmap("fotos/carro.png"))
         self.label_9.setScaledContents(True)
         self.label_9.setObjectName("label_9")
         self.widget_3 = QtWidgets.QWidget(self.widget)
@@ -211,6 +211,20 @@ class OP_CNH(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+      
+
+        # Adicione rótulo e entrada para o número da CNH
+        self.label_cnh = QtWidgets.QLabel(self.layoutWidget2)
+        self.label_cnh.setObjectName("label_cnh")
+        self.label_cnh.setText("Número da CNH:")
+        self.horizontalLayout_cnh = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_cnh.setObjectName("horizontalLayout_cnh")
+        self.horizontalLayout_cnh.addWidget(self.label_cnh)
+        self.lineEdit_cnh = QtWidgets.QLineEdit(self.layoutWidget2)
+        self.lineEdit_cnh.setObjectName("lineEdit_cnh")
+        self.horizontalLayout_cnh.addWidget(self.lineEdit_cnh)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_cnh)
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -236,6 +250,8 @@ class OP_CNH(object):
         self.label_3.setText(_translate("MainWindow", "Data de Nascimento:"))
         self.label_5.setText(_translate("MainWindow", "Data de Emissão CNH:"))
         self.label_10.setText(_translate("MainWindow", "Estado:"))
+        self.label_cnh.setText(_translate("MainWindow", "Número da CNH:"))
+
 
 
 if __name__ == "__main__":
